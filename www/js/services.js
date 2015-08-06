@@ -62,7 +62,7 @@ angular.module('starter.services', [])
 .service('WorkItemService', function($http, $q, ConnectionService) {
   this.getBacklog = function(projectName) {
     var queryObject = {
-      query: "Select [System.Id], [System.Title], [System.State] From WorkItems Where [System.TeamProject] = '" + projectName + "' AND [System.WorkItemType] = 'Product Backlog Item' AND [State] <> 'Closed' AND [State] <> 'Removed' AND [State] <> 'Done' order by [Microsoft.VSTS.Common.Priority] asc, [System.CreatedDate] desc"
+      query: "Select [System.Id], [System.Title], [System.State], [System.CreatedBy], [System.Description] From WorkItems Where [System.TeamProject] = '" + projectName + "' AND [System.WorkItemType] = 'Product Backlog Item' AND [State] <> 'Closed' AND [State] <> 'Removed' AND [State] <> 'Done' order by [Microsoft.VSTS.Common.Priority] asc, [System.CreatedDate] desc"
     }
 
     var authData = ConnectionService.getAuthData();
@@ -89,7 +89,7 @@ angular.module('starter.services', [])
     if (identifiers.length == 0) {
       return [];
     }
-    
+
     var identifierString = identifiers.join(",");
 
     var authData = ConnectionService.getAuthData();
@@ -107,6 +107,21 @@ angular.module('starter.services', [])
       })
 
     return defer.promise;
+  }
+
+  this.getWorkItem = function(identifier) {
+    var defer = $q.defer();
+
+    var results = this.getWorkItems([identifier])
+      .then(function(response) {
+        if (response.length > 0) {
+          defer.resolve(response[0]);
+        } else {
+          defer.resolve([]);
+        }
+      });
+
+      return defer.promise;
   }
 
   getIdentifiersFromQueryResponse = function(queryResult) {

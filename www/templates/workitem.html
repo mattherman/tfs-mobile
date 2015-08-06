@@ -1,0 +1,18 @@
+<ion-view view-title="Project Details">
+  <ion-nav-buttons></ion-nav-buttons>
+  <ion-content>
+    <div class="card">
+      <div class="item item-divider">
+        {{workItem.fields["System.Title"]}}
+      </div>
+      <div class="item item-text-wrap">
+        <b>Created By</b><br/>
+        {{workItem.fields["System.CreatedBy"]}}<br/><br/>
+        <b>State</b><br/>
+        {{workItem.fields["System.State"]}}<br/><br/>
+        <b>Description</b><br/>
+        {{workItem.fields["System.Description"]}}<br/><br/>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -3,7 +3,7 @@
   <ion-content>
     <ion-list>
       <div ng-if="backlogItems.length > 0">
-        <ion-item ng-repeat="workItem in backlogItems">
+        <ion-item ng-repeat="workItem in backlogItems" href="#/app/workitem/{{workItem.id}}">
           {{workItem.fields['System.Title']}}
         </ion-item>
       </div>

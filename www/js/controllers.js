@@ -72,4 +72,13 @@ angular.module('starter.controllers', [])
       $scope.backlogItems = result;
       $scope.loading = false;
     })
+})
+
+.controller('WorkItemCtrl', function($scope, $stateParams, WorkItemService) {
+  $scope.workItem = {};
+  WorkItemService.getWorkItem($stateParams.workItemId)
+    .then(function(result) {
+      $scope.workItem = result;
+      console.log(result);
+    })
 });

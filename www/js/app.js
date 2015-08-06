@@ -70,7 +70,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller: 'BacklogCtrl'
       }
     }
+  })
+
+  .state('app.workitem', {
+    url: '/workitem/:workItemId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/workitem.html',
+        controller: 'WorkItemCtrl'
+      }
+    }
   });
+  
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/login');
 });
