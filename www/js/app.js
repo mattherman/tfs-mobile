@@ -41,32 +41,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-  .state('app.search', {
-    url: '/search',
+
+  .state('app.projects', {
+    url: '/projects',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/projects.html',
+        controller: 'ProjectsCtrl'
       }
     }
   })
-
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.projects', {
-      url: '/projects',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/projects.html',
-          controller: 'ProjectsCtrl'
-        }
-      }
-    })
 
   .state('app.single', {
     url: '/projects/:projectId',
