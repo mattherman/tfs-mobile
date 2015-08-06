@@ -1,0 +1,14 @@
+<ion-view view-title="Projects">
+  <ion-content>
+    <ion-list>
+      <div ng-if="projects.length > 0">
+        <ion-item ng-repeat="project in projects" href="#/app/playlists/{{project.id}}">
+          {{project.title}}
+        </ion-item>
+      </div>
+      <div class="bar bar-header bar-light" ng-if="projects.length == 0">
+        <h1 class="title">No projects available...</h1>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>
