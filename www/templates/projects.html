@@ -1,13 +1,16 @@
-<ion-view view-title="Projects">
+<ion-view view-title="Projects" hide-back-button="true">
   <ion-content>
     <ion-list>
       <div ng-if="projects.length > 0">
-        <ion-item ng-repeat="project in projects" href="#/app/playlists/{{project.id}}">
-          {{project.title}}
+        <ion-item ng-repeat="project in projects" href="#/app/projects/{{project.id}}">
+          {{project.name}}
         </ion-item>
       </div>
-      <div class="bar bar-header bar-light" ng-if="projects.length == 0">
+      <div class="bar bar-header bar-light" ng-if="projects.length == 0 && !loading">
         <h1 class="title">No projects available...</h1>
+      </div>
+      <div class="bar bar-header bar-light" ng-if="projects.length == 0 && loading">
+        <h1 class="title">Loading projects...</h1>
       </div>
     </ion-list>
   </ion-content>

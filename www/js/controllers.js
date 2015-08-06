@@ -9,44 +9,53 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+})
+
+.controller('LoginCtrl', function($scope, $state, $ionicPopup, ConnectionService) {
   // Form data for the login modal
   $scope.loginData = {};
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
+    if (loginDataValid($scope.loginData)) {
+      ConnectionService.verifyConnection($scope.loginData)
+        .success(function(data) {
+          $state.go('app.projects')
+        })
+        .error(function(data) {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Login Failed',
+          });
+        });
+    } else {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Please fill in required fields',
+      });
+    }
   };
+
+  loginDataValid = function(loginData) {
+    return loginData != null &&
+            loginData.username &&
+            loginData.password &&
+            loginData.server;
+  }
 })
 
-.controller('ProjectsCtrl', function($scope) {
-  $scope.projects = [
-    //{ title: 'eCommerce Platform', id: 1 },
-    //{ title: 'Unity', id: 2 },
-  ];
+.controller('ProjectsCtrl', function($scope, ProjectService) {
+  $scope.loading = true;
+  $scope.projects = [];
+  ProjectService.getProjects()
+    .then(function(result) {
+      $scope.projects = result;
+      $scope.loading = false;
+    });
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function($scope, $stateParams, ProjectService) {
+  $scope.project = {};
+  ProjectService.getProject($stateParams.projectId)
+    .then(function(result) {
+      $scope.project = result;
+    })
 });

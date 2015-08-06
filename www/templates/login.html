@@ -1,11 +1,11 @@
 <ion-view view-title="Connect to Server">
   <ion-header-bar>
     <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
   </ion-header-bar>
   <ion-content>
+    <div ng-show="loginFailed" class="bar bar-subfooter bar-assertive">
+      <h1 class="title">Login Failed</h1>
+    </div>
     <form ng-submit="doLogin()">
       <div class="list list-inset">
         <label class="item item-input">
@@ -20,7 +20,9 @@
           <span class="input-label">Server</span>
           <input type="text" ng-model="loginData.server">
         </label>
-          <button class="button button-block button-positive" type="submit">Connect</button>
+          <button class="button button-block button-positive" type="submit">
+            Connect
+          </button>
       </div>
     </form>
   </ion-content>
