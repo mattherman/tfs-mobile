@@ -52,10 +52,24 @@ angular.module('starter.controllers', [])
     });
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams, ProjectService) {
+.controller('ProjectCtrl', function($scope, $stateParams, $state, ProjectService) {
   $scope.project = {};
   ProjectService.getProject($stateParams.projectId)
     .then(function(result) {
       $scope.project = result;
+    })
+
+  $scope.goToBacklog = function() {
+    $state.go('app.backlog', { projectName: $scope.project.name});
+  }
+})
+
+.controller('BacklogCtrl', function($scope, $stateParams, WorkItemService) {
+  $scope.loading = true;
+  $scope.backlogItems = [];
+  WorkItemService.getBacklog($stateParams.projectName)
+    .then(function(result) {
+      $scope.backlogItems = result;
+      $scope.loading = false;
     })
 });

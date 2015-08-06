@@ -1,0 +1,18 @@
+<ion-view view-title="Backlog">
+  <ion-nav-buttons></ion-nav-buttons>
+  <ion-content>
+    <ion-list>
+      <div ng-if="backlogItems.length > 0">
+        <ion-item ng-repeat="workItem in backlogItems">
+          {{workItem.fields['System.Title']}}
+        </ion-item>
+      </div>
+      <div class="bar bar-header bar-light" ng-if="backlogItems.length == 0 && !loading">
+        <h1 class="title">No items in the backlog</h1>
+      </div>
+      <div class="bar bar-header bar-light" ng-if="backlogItems.length == 0 && loading">
+        <h1 class="title">Loading work items...</h1>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

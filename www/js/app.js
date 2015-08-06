@@ -73,7 +73,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'menuContent': {
         templateUrl: 'templates/project.html',
-        controller: 'PlaylistCtrl'
+        controller: 'ProjectCtrl'
+      }
+    }
+  })
+
+  .state('app.backlog', {
+    url: '/backlog/:projectName',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/backlog.html',
+        controller: 'BacklogCtrl'
       }
     }
   });
