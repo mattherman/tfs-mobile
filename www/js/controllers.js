@@ -132,7 +132,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('TaskBoardCtrl', function($scope, $stateParams, TaskService) {
+.controller('TaskBoardCtrl', function($scope, $state, $stateParams, TaskService) {
   $scope.tasksToDo = [];
   $scope.tasksInProgress = [];
   $scope.tasksFinished = [];
@@ -148,7 +148,38 @@ angular.module('starter.controllers', [])
     $scope.loading = false;
   });
 
+  $scope.create = function() {
+    $state.go('app.createTask', { workItemId: $stateParams.workItemId, projectName: $stateParams.projectName });
+  }
+
   filterByState = function(workItems, state) {
     return _.filter(workItems, function(item) { return item.fields['System.State'] == state});
   }
-});
+})
+
+.controller('CreateTaskCtrl', function($scope, $state, $stateParams, $ionicPopup, TaskService) {
+  $scope.taskData = {};
+
+  $scope.create = function() {
+    if (formValid($scope.taskData)) {
+      TaskService.createTask($scope.taskData, $stateParams.workItemId, $stateParams.projectName)
+        .success(function(result) {
+          $state.go('app.taskBoard', { projectName: $stateParams.projectName, workItemId: $stateParams.workItemId });
+        })
+        .error(function(result) {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Create Failed',
+          });
+        });
+    } else {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Title is a required field',
+      });
+    }
+
+  }
+
+  formValid = function(taskData) {
+      return taskData.title;
+  }
+})

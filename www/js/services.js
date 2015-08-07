@@ -229,6 +229,45 @@ angular.module('starter.services', [])
           return defer.promise;
     }
 
+    this.createTask = function(taskData, workItemId, projectName) {
+      var createRequest = [
+        {
+          op: "add",
+          path: "/fields/System.Title",
+          value: taskData.title
+        },
+        {
+          "op": "add",
+          "path": "/relations/-",
+          "value": {
+            "rel": "System.LinkTypes.Hierarchy-Reverse",
+            "url": "https://fabrikam.visualstudio.com/DefaultCollection/_apis/wit/workItems/" + workItemId,
+          }
+        }
+      ];
+
+      if (taskData.description) {
+        var desc = {
+          op: "add",
+          path: "/fields/System.Description",
+          value: taskData.description
+        };
+        createRequest.push(desc);
+      }
+
+      var authData = ConnectionService.getAuthData();
+      var url = 'https://' + authData.server + '/DefaultCollection/' + projectName + '/_apis/wit/workitems/$Task?api-version=1.0'
+
+      return $http.patch(url, createRequest,
+        {
+          headers:
+          {
+            'Content-Type': 'application/json-patch+json',
+            'Authorization': 'Basic ' + authData.authToken
+          }
+      });
+    }
+
     getIdentifiersFromQueryResponse = function(queryResponse) {
       var taskRelations = _.where(queryResponse.workItemRelations, { rel: 'System.LinkTypes.Hierarchy-Forward'});
       return _.map(taskRelations, function(item) { return item.target.id });

@@ -92,6 +92,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('app.createTask', {
+    url: '/workItem/:projectName/:workItemId/tasks/create',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/createTask.html',
+        controller: 'CreateTaskCtrl'
+      }
+    }
+  })
+
   .state('app.taskBoard', {
     url: '/workItem/:projectName/:workItemId/tasks',
     views: {
