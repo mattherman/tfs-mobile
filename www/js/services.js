@@ -124,6 +124,38 @@ angular.module('starter.services', [])
       return defer.promise;
   }
 
+  this.updateWorkItem = function(workItem) {
+    var updateRequest =
+    [
+      {
+        op: "replace",
+        path: "/fields/System.Description",
+        value: workItem.fields["System.Description"]
+      }
+    ];
+
+    if (workItem.fields["Microsoft.VSTS.Common.AcceptanceCriteria"]) {
+      var acceptanceCriteriaUpdate = {
+        op: "replace",
+        path: "/fields/Microsoft.VSTS.Common.AcceptanceCriteria",
+        value: workItem.fields["Microsoft.VSTS.Common.AcceptanceCriteria"]
+      };
+      updateRequest.push(acceptanceCriteriaUpdate);
+    }
+
+    var authData = ConnectionService.getAuthData();
+    var url = 'https://' + authData.server + '/DefaultCollection/_apis/wit/workitems/' + workItem.id + '?api-version=1.0'
+
+    return $http.patch(url, updateRequest,
+      {
+        headers:
+        {
+          'Content-Type': 'application/json-patch+json',
+          'Authorization': 'Basic ' + authData.authToken
+        }
+    });
+  }
+
   getIdentifiersFromQueryResponse = function(queryResult) {
     var workItems = queryResult.workItems;
     return _.map(workItems, function(item) { return item.id });

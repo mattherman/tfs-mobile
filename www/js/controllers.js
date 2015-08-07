@@ -74,11 +74,22 @@ angular.module('starter.controllers', [])
     })
 })
 
-.controller('WorkItemCtrl', function($scope, $stateParams, WorkItemService) {
+.controller('WorkItemCtrl', function($scope, $stateParams, $state, $ionicPopup, WorkItemService) {
   $scope.workItem = {};
   WorkItemService.getWorkItem($stateParams.workItemId)
     .then(function(result) {
       $scope.workItem = result;
-      console.log(result);
-    })
+    });
+
+  $scope.updateWorkItem = function() {
+    WorkItemService.updateWorkItem($scope.workItem)
+      .success(function(result) {
+        $state.go('app.backlog', { projectName: $scope.workItem.fields['System.TeamProject']});
+      })
+      .error(function(result) {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Save Failed',
+        });
+      });
+  }
 });

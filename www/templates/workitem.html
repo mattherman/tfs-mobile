@@ -1,5 +1,11 @@
 <ion-view view-title="Work Item Details">
-  <ion-nav-buttons></ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-light saveButton" ng-click="updateWorkItem()">
+      Save
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+  </ion-nav-buttons>
   <ion-content>
     <div class="card">
       <div class="item item-divider">
@@ -37,13 +43,13 @@
         <div class="workItemField">
           <b>Description</b><br/>
           <label class="item item-input">
-            <textarea rows="10">{{workItem.fields["System.Description"]}}</textarea>
+            <textarea ng-model="workItem.fields['System.Description']"rows="10">{{workItem.fields["System.Description"]}}</textarea>
           </label>
         </div>
         <div class="workItemField" ng-if="workItem.fields['Microsoft.VSTS.Common.AcceptanceCriteria']">
           <b>Acceptance Criteria</b><br/>
           <label class="item item-input">
-            <textarea class="workItemTextField" rows="10">{{workItem.fields["Microsoft.VSTS.Common.AcceptanceCriteria"]}}</textarea>
+            <textarea ng-model="workItem.fields['Microsoft.VSTS.Common.AcceptanceCriteria']" rows="10">{{workItem.fields["Microsoft.VSTS.Common.AcceptanceCriteria"]}}</textarea>
           </label>
         </div>
       </div>
