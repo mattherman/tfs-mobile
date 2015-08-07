@@ -201,3 +201,36 @@ angular.module('starter.services', [])
     return _.map(workItems, function(item) { return item.id });
   }
 })
+
+.service('TaskService', function($http, $q, ConnectionService, WorkItemService) {
+    this.getTasksForWorkItem = function(workItemId, projectName) {
+
+        var authData = ConnectionService.getAuthData();
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + authData.authToken
+        var url = 'https://' + authData.server + '/DefaultCollection/' + projectName + '/_apis/wit/wiql?api-version=1.0';
+
+        var queryObject = {
+          query: "SELECT * FROM WorkItemLinks WHERE  Source.[System.Id] = " + workItemId
+        }
+
+        var defer = $q.defer();
+
+        var getWorkItems = this.getWorkItems;
+        $http.post(url, queryObject)
+          .success(function(response) {
+            var identifiers = getIdentifiersFromQueryResponse(response);
+            var tasks = WorkItemService.getWorkItems(identifiers);
+            defer.resolve(tasks);
+          })
+          .error(function(response) {
+            return defer.resolve([]);
+          })
+
+          return defer.promise;
+    }
+
+    getIdentifiersFromQueryResponse = function(queryResponse) {
+      var taskRelations = _.where(queryResponse.workItemRelations, { rel: 'System.LinkTypes.Hierarchy-Forward'});
+      return _.map(taskRelations, function(item) { return item.target.id });
+    }
+});

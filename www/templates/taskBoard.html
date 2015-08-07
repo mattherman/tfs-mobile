@@ -1,0 +1,31 @@
+<ion-view view-title="Tasks">
+  <ion-nav-buttons>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-list>
+      <div ng-if="!loading">
+        <div class="item item-divider">
+          To Do
+        </div>
+        <ion-item ng-repeat="task in tasksToDo">
+          {{task.fields['System.Title']}}
+        </ion-item>
+        <div class="item item-divider">
+          In Progress
+        </div>
+        <ion-item ng-repeat="task in tasksInProgress">
+          {{task.fields['System.Title']}}
+        </ion-item>
+        <div class="item item-divider">
+          Finished
+        </div>
+        <ion-item ng-repeat="task in tasksFinished">
+          {{task.fields['System.Title']}}
+        </ion-item>
+      </div>
+      <div class="bar bar-header bar-light" ng-if="loading">
+        <h1 class="title">Loading tasks...</h1>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

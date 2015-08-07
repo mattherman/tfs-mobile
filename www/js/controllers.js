@@ -126,4 +126,29 @@ angular.module('starter.controllers', [])
         });
       });
   }
+
+  $scope.goToTasks = function() {
+    $state.go('app.taskBoard', { workItemId: $stateParams.workItemId, projectName: $scope.workItem.fields['System.TeamProject'] });
+  }
+})
+
+.controller('TaskBoardCtrl', function($scope, $stateParams, TaskService) {
+  $scope.tasksToDo = [];
+  $scope.tasksInProgress = [];
+  $scope.tasksFinished = [];
+  $scope.loading = true;
+
+  $scope.$on('$ionicView.enter', function(e) {
+    TaskService.getTasksForWorkItem($stateParams.workItemId, $stateParams.projectName)
+      .then(function(result) {
+        $scope.tasksToDo = filterByState(result, 'To Do');
+        $scope.tasksInProgress = filterByState(result, 'In Progress');
+        $scope.tasksFinished = filterByState(result, 'Done');
+      });
+    $scope.loading = false;
+  });
+
+  filterByState = function(workItems, state) {
+    return _.filter(workItems, function(item) { return item.fields['System.State'] == state});
+  }
 });

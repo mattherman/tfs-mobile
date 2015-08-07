@@ -83,11 +83,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   .state('app.createWorkItem', {
-    url: 'backlog/:projectName/create',
+    url: '/backlog/:projectName/create',
     views: {
       'menuContent': {
         templateUrl: 'templates/createWorkItem.html',
         controller: 'CreateWorkItemCtrl'
+      }
+    }
+  })
+
+  .state('app.taskBoard', {
+    url: '/workItem/:projectName/:workItemId/tasks',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/taskBoard.html',
+        controller: 'TaskBoardCtrl'
       }
     }
   });
