@@ -1,10 +1,14 @@
 /* Empty. Add your own CSS if you like */
-.workItemField {
+.work-item-field {
   padding-top: 6px;
   padding-bottom: 6px;
 }
 
-.saveButton {
+.nav-button-right {
   margin-right: 5px;
   width: 75px;
+}
+
+.form-text-area {
+  height: 150px;
 }

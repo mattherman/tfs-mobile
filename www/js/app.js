@@ -80,8 +80,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller: 'WorkItemCtrl'
       }
     }
+  })
+
+  .state('app.createWorkItem', {
+    url: 'backlog/:projectName/create',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/createWorkItem.html',
+        controller: 'CreateWorkItemCtrl'
+      }
+    }
   });
-  
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/login');
 });

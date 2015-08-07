@@ -1,5 +1,11 @@
 <ion-view view-title="Backlog">
-  <ion-nav-buttons></ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-light nav-button-right" ng-click="create()">
+      Create
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+  </ion-nav-buttons>
   <ion-content>
     <ion-list>
       <div ng-if="backlogItems.length > 0">

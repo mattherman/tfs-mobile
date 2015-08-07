@@ -156,6 +156,46 @@ angular.module('starter.services', [])
     });
   }
 
+  this.createWorkItem = function(workItemData, projectName) {
+    var createRequest = [
+      {
+        op: "add",
+        path: "/fields/System.Title",
+        value: workItemData.title
+      }
+    ];
+
+    if (workItemData.description) {
+      var desc = {
+        op: "add",
+        path: "/fields/System.Description",
+        value: workItemData.description
+      };
+      createRequest.push(desc);
+    }
+
+    if (workItemData.acceptanceCriteria) {
+      var acceptance = {
+        op: "add",
+        path: "/fields/Microsoft.VSTS.Common.AcceptanceCriteria",
+        value: workItemData.acceptanceCriteria
+      };
+      createRequest.push(acceptance);
+    }
+
+    var authData = ConnectionService.getAuthData();
+    var url = 'https://' + authData.server + '/DefaultCollection/' + projectName + '/_apis/wit/workitems/$' + workItemData.type + '?api-version=1.0'
+
+    return $http.patch(url, createRequest,
+      {
+        headers:
+        {
+          'Content-Type': 'application/json-patch+json',
+          'Authorization': 'Basic ' + authData.authToken
+        }
+    });
+  }
+
   getIdentifiersFromQueryResponse = function(queryResult) {
     var workItems = queryResult.workItems;
     return _.map(workItems, function(item) { return item.id });

@@ -64,14 +64,48 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('BacklogCtrl', function($scope, $stateParams, WorkItemService) {
+.controller('BacklogCtrl', function($scope, $stateParams, $state, WorkItemService) {
   $scope.loading = true;
   $scope.backlogItems = [];
-  WorkItemService.getBacklog($stateParams.projectName)
-    .then(function(result) {
-      $scope.backlogItems = result;
-      $scope.loading = false;
-    })
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.loading = true;
+    WorkItemService.getBacklog($stateParams.projectName)
+      .then(function(result) {
+        $scope.backlogItems = result;
+        $scope.loading = false;
+      });
+  });
+
+  $scope.create = function() {
+    $state.go('app.createWorkItem', { projectName: $stateParams.projectName});
+  }
+})
+
+.controller('CreateWorkItemCtrl', function($scope, $stateParams, $state, $ionicPopup, WorkItemService) {
+  $scope.workItemData = {};
+
+  $scope.create = function() {
+    if (formValid($scope.workItemData)) {
+      WorkItemService.createWorkItem($scope.workItemData, $stateParams.projectName)
+        .success(function(result) {
+          $state.go('app.backlog', { projectName: $stateParams.projectName });
+        })
+        .error(function(result) {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Create Failed',
+          });
+        });
+    } else {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Title and Type are required fields',
+      });
+    }
+
+  }
+
+  formValid = function(workItemData) {
+      return workItemData.title && workItemData.type;
+  }
 })
 
 .controller('WorkItemCtrl', function($scope, $stateParams, $state, $ionicPopup, WorkItemService) {

@@ -1,0 +1,36 @@
+<ion-view view-title="Create Work Item">
+  <ion-header-bar>
+    <h1 class="title">Create Work Item</h1>
+  </ion-header-bar>
+  <ion-nav-buttons></ion-nav-buttons>
+  <ion-content>
+    <form ng-submit="create()">
+      <div class="list list-inset">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Title</span>
+          <input type="text" ng-model="workItemData.title">
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Type
+          </div>
+          <select ng-model="workItemData.type">
+            <option selected="selected">Product Backlog Item</option>
+            <option>Bug</option>
+          </select>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Description</span>
+          <textarea class="form-text-area" ng-model="workItemData.description"></textarea>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Acceptance Criteria</span>
+          <textarea class="form-text-area" ng-model="workItemData.acceptanceCriteria"></textarea>
+        </label>
+        <button class="button button-block button-positive" type="submit">
+          Create
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

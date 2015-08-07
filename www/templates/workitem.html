@@ -1,6 +1,6 @@
 <ion-view view-title="Work Item Details">
   <ion-nav-buttons side="right">
-    <button class="button button-light saveButton" ng-click="updateWorkItem()">
+    <button class="button button-light nav-button-right" ng-click="updateWorkItem()">
       Save
     </button>
   </ion-nav-buttons>
@@ -13,40 +13,40 @@
       </div>
       <div class="item item-text-wrap">
         <div class="row">
-          <div class="workItemField col">
+          <div class="work-item-field col">
             <b>Type</b><br/>
             {{workItem.fields["System.WorkItemType"]}}
           </div>
         </div>
         <div class="row">
-          <div class="workItemField col">
+          <div class="work-item-field col">
             <b>State</b><br/>
             {{workItem.fields["System.State"]}}
           </div>
         </div>
         <div class="row">
-          <div class="workItemField col">
+          <div class="work-item-field col">
             <b>Created By</b><br/>
             {{workItem.fields["System.CreatedBy"]}}
           </div>
         </div>
         <div class="row">
-          <div class="workItemField col" ng-if="workItem.fields['Microsoft.VSTS.Common.Priority']">
+          <div class="work-item-field col" ng-if="workItem.fields['Microsoft.VSTS.Common.Priority']">
             <b>Priority</b><br/>
             {{workItem.fields["Microsoft.VSTS.Common.Priority"]}}
           </div>
-          <div class="workItemField col" ng-if="workItem.fields['Microsoft.VSTS.Scheduling.Effort']">
+          <div class="work-item-field col" ng-if="workItem.fields['Microsoft.VSTS.Scheduling.Effort']">
             <b>Effort</b><br/>
             {{workItem.fields["Microsoft.VSTS.Scheduling.Effort"]}}
           </div>
         </div>
-        <div class="workItemField">
+        <div class="work-item-field">
           <b>Description</b><br/>
           <label class="item item-input">
             <textarea ng-model="workItem.fields['System.Description']"rows="10">{{workItem.fields["System.Description"]}}</textarea>
           </label>
         </div>
-        <div class="workItemField" ng-if="workItem.fields['Microsoft.VSTS.Common.AcceptanceCriteria']">
+        <div class="work-item-field">
           <b>Acceptance Criteria</b><br/>
           <label class="item item-input">
             <textarea ng-model="workItem.fields['Microsoft.VSTS.Common.AcceptanceCriteria']" rows="10">{{workItem.fields["Microsoft.VSTS.Common.AcceptanceCriteria"]}}</textarea>
