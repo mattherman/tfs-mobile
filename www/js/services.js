@@ -128,7 +128,7 @@ angular.module('starter.services', [])
     var updateRequest =
     [
       {
-        op: "replace",
+        op: "add",
         path: "/fields/System.Description",
         value: workItem.fields["System.Description"]
       }
@@ -136,7 +136,7 @@ angular.module('starter.services', [])
 
     if (workItem.fields["Microsoft.VSTS.Common.AcceptanceCriteria"]) {
       var acceptanceCriteriaUpdate = {
-        op: "replace",
+        op: "add",
         path: "/fields/Microsoft.VSTS.Common.AcceptanceCriteria",
         value: workItem.fields["Microsoft.VSTS.Common.AcceptanceCriteria"]
       };
