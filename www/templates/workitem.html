@@ -1,4 +1,4 @@
-<ion-view view-title="Project Details">
+<ion-view view-title="Work Item Details">
   <ion-nav-buttons></ion-nav-buttons>
   <ion-content>
     <div class="card">
@@ -6,12 +6,46 @@
         {{workItem.fields["System.Title"]}}
       </div>
       <div class="item item-text-wrap">
-        <b>Created By</b><br/>
-        {{workItem.fields["System.CreatedBy"]}}<br/><br/>
-        <b>State</b><br/>
-        {{workItem.fields["System.State"]}}<br/><br/>
-        <b>Description</b><br/>
-        {{workItem.fields["System.Description"]}}<br/><br/>
+        <div class="row">
+          <div class="workItemField col">
+            <b>Type</b><br/>
+            {{workItem.fields["System.WorkItemType"]}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="workItemField col">
+            <b>State</b><br/>
+            {{workItem.fields["System.State"]}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="workItemField col">
+            <b>Created By</b><br/>
+            {{workItem.fields["System.CreatedBy"]}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="workItemField col" ng-if="workItem.fields['Microsoft.VSTS.Common.Priority']">
+            <b>Priority</b><br/>
+            {{workItem.fields["Microsoft.VSTS.Common.Priority"]}}
+          </div>
+          <div class="workItemField col" ng-if="workItem.fields['Microsoft.VSTS.Scheduling.Effort']">
+            <b>Effort</b><br/>
+            {{workItem.fields["Microsoft.VSTS.Scheduling.Effort"]}}
+          </div>
+        </div>
+        <div class="workItemField">
+          <b>Description</b><br/>
+          <label class="item item-input">
+            <textarea rows="10">{{workItem.fields["System.Description"]}}</textarea>
+          </label>
+        </div>
+        <div class="workItemField" ng-if="workItem.fields['Microsoft.VSTS.Common.AcceptanceCriteria']">
+          <b>Acceptance Criteria</b><br/>
+          <label class="item item-input">
+            <textarea class="workItemTextField" rows="10">{{workItem.fields["Microsoft.VSTS.Common.AcceptanceCriteria"]}}</textarea>
+          </label>
+        </div>
       </div>
     </div>
   </ion-content>

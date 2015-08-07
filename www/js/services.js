@@ -62,7 +62,7 @@ angular.module('starter.services', [])
 .service('WorkItemService', function($http, $q, ConnectionService) {
   this.getBacklog = function(projectName) {
     var queryObject = {
-      query: "Select [System.Id], [System.Title], [System.State], [System.CreatedBy], [System.Description] From WorkItems Where [System.TeamProject] = '" + projectName + "' AND [System.WorkItemType] = 'Product Backlog Item' AND [State] <> 'Closed' AND [State] <> 'Removed' AND [State] <> 'Done' order by [Microsoft.VSTS.Common.Priority] asc, [System.CreatedDate] desc"
+      query: "Select [System.Id], [System.Title], [System.State], [System.CreatedBy], [System.Description], [Microsoft.VSTS.Common.AcceptanceCriteria], [Microsoft.VSTS.Common.Priority], [Microsoft.VSTS.Scheduling.Effort] From WorkItems Where [System.TeamProject] = '" + projectName + "' AND ([System.WorkItemType] = 'Product Backlog Item' OR [System.WorkItemType] = 'Bug') AND [State] <> 'Closed' AND [State] <> 'Removed' AND [State] <> 'Done' order by [Microsoft.VSTS.Common.Priority] asc, [System.CreatedDate] desc"
     }
 
     var authData = ConnectionService.getAuthData();
